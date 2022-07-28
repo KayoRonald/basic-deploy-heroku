@@ -1,18 +1,14 @@
-from fastapi import APIRouter, Request
-from fastapi.templating import Jinja2Templates
-from pathlib import Path
-
+from fastapi import APIRouter
 from app.recipe_data import RECIPES
+
+# from typing import Optional
+# from app.schema import Recipe
 
 router = APIRouter()
 
-BASE_PATH = Path(__file__).resolve().parent
-TEMPLATES = Jinja2Templates(directory=str(BASE_PATH / "templates"))
-
 @router.get('/', status_code=200)
-def root(request: Request) -> dict:
-
-   return TEMPLATES.TemplateResponse(
-        "index.html",
-        {"request": request, "recipes": RECIPES},
-    )
+def root() -> dict:
+  result = [recipe for recipe in RECIPES]
+  # result = [recipe for recipe in RECIPES if recipe["id"] == recipe_id]
+  # result = [for recipe in range(len(RECIPES)) recipe[recipe]]
+  return result
